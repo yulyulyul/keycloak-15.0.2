@@ -30,6 +30,8 @@ public class Messages {
 
     public static final String INVALID_USERNAME_OR_EMAIL = "invalidUsernameOrEmailMessage";
 
+    public static final String CONCURRENT_ACCESS = "concurrentAccess";
+
     public static final String INVALID_PASSWORD = "invalidPasswordMessage";
 
     public static final String INVALID_EMAIL = "invalidEmailMessage";

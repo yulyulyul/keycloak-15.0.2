@@ -40,14 +40,19 @@ public class UsernamePasswordFormFactory implements AuthenticatorFactory, Displa
     public static final String PROVIDER_ID = "auth-username-password-form";
     public static final UsernamePasswordForm SINGLETON = new UsernamePasswordForm();
 
-    @Override
-    public Authenticator create(KeycloakSession session) {
+    private UsernamePasswordForm getSingletonUserNamePasswordForm(KeycloakSession session){
+        SINGLETON.initializeSession(session);
         return SINGLETON;
     }
 
     @Override
+    public Authenticator create(KeycloakSession session) {
+        return getSingletonUserNamePasswordForm(session);
+    }
+
+    @Override
     public Authenticator createDisplay(KeycloakSession session, String displayType) {
-        if (displayType == null) return SINGLETON;
+        if (displayType == null) return getSingletonUserNamePasswordForm(session);
         if (!OAuth2Constants.DISPLAY_CONSOLE.equalsIgnoreCase(displayType)) return null;
         return ConsoleUsernamePasswordAuthenticator.SINGLETON;
     }
