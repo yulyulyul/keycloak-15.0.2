@@ -730,7 +730,14 @@ public class AuthenticationProcessor {
                 event.error(Errors.USER_NOT_FOUND);
                 if (e.getResponse() != null) return e.getResponse();
                 return ErrorPage.error(session, authenticationSession, Response.Status.BAD_REQUEST, Messages.INVALID_USER);
-            } else if (e.getError() == AuthenticationFlowError.USER_DISABLED) {
+            }
+            else if (e.getError() == AuthenticationFlowError.ALREADY_LIVE_SESSION_EXIST){
+                ServicesLogger.LOGGER.failedAuthentication(e);
+                event.error(Errors.CONCURRENT_ACCESS);
+                if (e.getResponse() != null) return e.getResponse();
+                return ErrorPage.error(session, authenticationSession, Response.Status.BAD_REQUEST, Messages.CONCURRENT_ACCESS);
+            }
+            else if (e.getError() == AuthenticationFlowError.USER_DISABLED) {
                 ServicesLogger.LOGGER.failedAuthentication(e);
                 event.error(Errors.USER_DISABLED);
                 if (e.getResponse() != null) return e.getResponse();
@@ -788,7 +795,8 @@ public class AuthenticationProcessor {
                 event.error(Errors.INVALID_USER_CREDENTIALS);
                 if (e.getResponse() != null) return e.getResponse();
                 return ErrorPage.error(session, authenticationSession, Response.Status.BAD_REQUEST, Messages.CREDENTIAL_SETUP_REQUIRED);
-            } else {
+            }
+            else {
                 ServicesLogger.LOGGER.failedAuthentication(e);
                 event.error(Errors.INVALID_USER_CREDENTIALS);
                 if (e.getResponse() != null) return e.getResponse();

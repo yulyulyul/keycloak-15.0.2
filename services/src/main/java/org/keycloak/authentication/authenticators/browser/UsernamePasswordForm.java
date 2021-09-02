@@ -76,7 +76,7 @@ public class UsernamePasswordForm extends AbstractUsernameFormAuthenticator impl
             // 동시 접속을 제한한다. 1명 이상 접속 못하게 제한.
             if(userSessionCount > 0){
 //                logoutOldestSession(userSessionModels);
-                context.failure(AuthenticationFlowError.ACCESS_DENIED);
+                context.failure(AuthenticationFlowError.ALREADY_LIVE_SESSION_EXIST);
                 return false;
             }
         }

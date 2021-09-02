@@ -46,5 +46,7 @@ public enum AuthenticationFlowError {
     IDENTITY_PROVIDER_ERROR,
     DISPLAY_NOT_SUPPORTED,
 
-    ACCESS_DENIED
+    ACCESS_DENIED,
+
+    ALREADY_LIVE_SESSION_EXIST
 }
