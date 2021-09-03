@@ -67,7 +67,7 @@ public class UsernamePasswordForm extends AbstractUsernameFormAuthenticator impl
     protected boolean validateForm(AuthenticationFlowContext context, MultivaluedMap<String, String> formData) {
         boolean result = validateUserAndPassword(context, formData);
         LOG.info("validateForm result : " + result);
-        if(this.session != null){
+        if(result && this.session != null){
 //            List<UserSessionModel> userSessionModels = session.sessions().getUserSessionsStream(context.getRealm(), context.getUser()).collect(Collectors.toList());
             List<UserSessionModel> userSessionModels = session.sessions().getUserSessions(context.getRealm(), context.getUser());
             int userSessionCount = userSessionModels.size();
