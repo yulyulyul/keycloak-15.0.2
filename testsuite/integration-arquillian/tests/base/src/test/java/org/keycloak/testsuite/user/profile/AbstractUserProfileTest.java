@@ -72,6 +72,11 @@ public abstract class AbstractUserProfileTest extends AbstractTestRealmKeycloakT
     protected static AuthenticationSessionModel createAuthenticationSession(ClientModel client, Set<String> scopes) {
         return new AuthenticationSessionModel() {
             @Override
+            public void updateLoginTime() {
+
+            }
+
+            @Override
             public String getTabId() {
                 return null;
             }

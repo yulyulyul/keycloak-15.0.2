@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.jboss.logging.Logger;
 import org.keycloak.models.ClientModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
@@ -42,6 +43,8 @@ public class AuthenticationSessionAdapter implements AuthenticationSessionModel 
     private final RootAuthenticationSessionAdapter parent;
     private final String tabId;
     private AuthenticationSessionEntity entity;
+
+    private static final Logger logger = Logger.getLogger(AuthenticationSessionAdapter.class);
 
     public AuthenticationSessionAdapter(KeycloakSession session, RootAuthenticationSessionAdapter parent, String tabId, AuthenticationSessionEntity entity) {
         this.session = session;
@@ -86,6 +89,17 @@ public class AuthenticationSessionAdapter implements AuthenticationSessionModel 
         update();
     }
 
+    @Override
+    public void updateLoginTime(){
+        if(entity.getAuthUserId() != null){
+            logger.info("authUserId : " + entity.getAuthUserId());
+            logger.info("realm : " + getRealm().getId());
+            session.users().updateLoginTime(getRealm(), entity.getAuthUserId());
+        }
+        else{
+            logger.info("authUserId is null");
+        }
+    }
 
     @Override
     public String getAction() {

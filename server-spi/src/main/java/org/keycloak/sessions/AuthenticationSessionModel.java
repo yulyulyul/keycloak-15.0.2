@@ -31,6 +31,8 @@ import org.keycloak.models.UserModel;
  */
 public interface AuthenticationSessionModel extends CommonClientSessionModel {
 
+    void updateLoginTime();
+
     /**
      * @return ID of this subsession (in other words, usually browser tab). For lookup the AuthenticationSessionModel, you need:
      * ID of rootSession (parent), client UUID and tabId. For lookup the ID of the parent, use {@link #getParentSession().getId()}

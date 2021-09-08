@@ -108,6 +108,7 @@ public class JpaUserProvider implements UserProvider.Streams, UserCredentialStor
         entity.setCreatedTimestamp(System.currentTimeMillis());
         entity.setUsername(username.toLowerCase());
         entity.setRealmId(realm.getId());
+//        entity.updateLastLogin();
         em.persist(entity);
         em.flush();
         UserAdapter userModel = new UserAdapter(session, realm, em, entity);
@@ -348,6 +349,15 @@ public class JpaUserProvider implements UserProvider.Streams, UserCredentialStor
         em.flush();
     }
 
+
+    @Override
+    public void updateLoginTime(RealmModel realm, String userId) {
+        UserEntity entity = em.getReference(UserEntity.class, userId);
+        if (entity == null) {
+            throw new ModelException("User does not exists");
+        }
+        entity.updateLastLogin();
+    }
 
     @Override
     public void setNotBeforeForUser(RealmModel realm, UserModel user, int notBefore) {

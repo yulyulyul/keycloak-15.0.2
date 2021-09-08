@@ -39,6 +39,8 @@ public interface UserProvider extends Provider,
         UserRegistrationProvider,
         UserBulkUpdateProvider {
 
+    void updateLoginTime(RealmModel realm, String userId);
+
     /**
      * Sets the notBefore value for the given user
      *

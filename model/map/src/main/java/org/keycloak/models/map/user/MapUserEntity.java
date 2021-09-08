@@ -22,6 +22,7 @@ import org.keycloak.models.map.common.AbstractEntity;
 import org.keycloak.models.map.common.UpdatableEntity;
 import org.keycloak.models.utils.KeycloakModelUtils;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -50,6 +51,7 @@ public class MapUserEntity implements AbstractEntity, UpdatableEntity {
     private Long createdTimestamp;
     private String lastName;
     private String email;
+    private LocalDate lastLogin;
     private boolean enabled;
     private boolean emailVerified;
     // This is necessary to be able to dynamically switch unique email constraints on and off in the realm settings
@@ -144,6 +146,11 @@ public class MapUserEntity implements AbstractEntity, UpdatableEntity {
         this.updated |= !Objects.equals(this.email, email);
         this.email = email;
         this.emailConstraint = email == null || duplicateEmailsAllowed ? KeycloakModelUtils.generateId() : email;
+    }
+
+    public void updateLastLogin(){
+        this.updated |= !Objects.equals(this.lastLogin, LocalDate.now());
+        this.lastLogin = LocalDate.now();
     }
 
     public boolean isEnabled() {

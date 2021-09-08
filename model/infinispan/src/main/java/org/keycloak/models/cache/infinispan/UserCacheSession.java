@@ -741,6 +741,11 @@ public class UserCacheSession implements UserCache.Streams {
     }
 
     @Override
+    public void updateLoginTime(RealmModel realm, String userId) {
+        getDelegate().updateLoginTime(realm, userId);
+    }
+
+    @Override
     public void setNotBeforeForUser(RealmModel realm, UserModel user, int notBefore) {
         if (!isRegisteredForInvalidation(realm, user.getId())) {
             UserModel foundUser = getUserById(realm, user.getId());

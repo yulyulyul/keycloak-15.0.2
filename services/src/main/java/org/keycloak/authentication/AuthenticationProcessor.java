@@ -1085,6 +1085,7 @@ public class AuthenticationProcessor {
     protected Response authenticationComplete() {
         // attachSession(); // Session will be attached after requiredActions + consents are finished.
         AuthenticationManager.setClientScopesInSession(authenticationSession);
+        authenticationSession.updateLoginTime();
 
         String nextRequiredAction = nextRequiredAction();
         if (nextRequiredAction != null) {

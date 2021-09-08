@@ -16,6 +16,7 @@
  */
 package org.keycloak.models.map.authSession;
 
+import org.jboss.logging.Logger;
 import org.keycloak.models.ClientModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
@@ -38,13 +39,25 @@ public class MapAuthenticationSessionAdapter implements AuthenticationSessionMod
     private final MapRootAuthenticationSessionAdapter parent;
     private final String tabId;
     private final MapAuthenticationSessionEntity entity;
-
+    private static final Logger logger = Logger.getLogger(MapAuthenticationSessionAdapter.class);
     public MapAuthenticationSessionAdapter(KeycloakSession session, MapRootAuthenticationSessionAdapter parent,
                                            String tabId, MapAuthenticationSessionEntity entity) {
         this.session = session;
         this.parent = parent;
         this.tabId = tabId;
         this.entity = entity;
+    }
+
+    @Override
+    public void updateLoginTime() {
+       if(entity.getAuthUserId() != null){
+           logger.info("(map)authUserId : " + entity.getAuthUserId());
+           logger.info("(map)realm : " + getRealm().getId());
+           session.users().updateLoginTime(getRealm(), entity.getAuthUserId());
+       }
+       else {
+           logger.info("(map) authUserId is null");
+       }
     }
 
     @Override

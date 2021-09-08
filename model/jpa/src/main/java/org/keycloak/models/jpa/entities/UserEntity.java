@@ -34,6 +34,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -87,6 +88,8 @@ public class UserEntity {
     protected boolean enabled;
     @Column(name = "EMAIL_VERIFIED")
     protected boolean emailVerified;
+    @Column(name = "LAST_LOGIN")
+    protected LocalDate lastLogin;
 
     // This is necessary to be able to dynamically switch unique email constraints on and off in the realm settings
     @Column(name = "EMAIL_CONSTRAINT")
@@ -171,6 +174,10 @@ public class UserEntity {
     public void setEmail(String email, boolean allowDuplicate) {
         this.email = email;
         this.emailConstraint = email == null || allowDuplicate ? KeycloakModelUtils.generateId() : email;
+    }
+
+    public void updateLastLogin(){
+        this.lastLogin = LocalDate.now();
     }
 
     public boolean isEnabled() {

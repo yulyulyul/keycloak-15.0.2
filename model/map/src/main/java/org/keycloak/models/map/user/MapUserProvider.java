@@ -263,6 +263,11 @@ public class MapUserProvider implements UserProvider.Streams, UserCredentialStor
     }
 
     @Override
+    public void updateLoginTime(RealmModel realm, String userId) {
+        getEntityByIdOrThrow(realm, userId).updateLastLogin();
+    }
+
+    @Override
     public void setNotBeforeForUser(RealmModel realm, UserModel user, int notBefore) {
         LOG.tracef("setNotBeforeForUser(%s, %s, %d)%s", realm, user.getId(), notBefore, getShortStackTrace());
         getEntityByIdOrThrow(realm, user.getId()).setNotBefore(notBefore);

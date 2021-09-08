@@ -608,6 +608,11 @@ public class UserStorageManager extends AbstractStorageManager<UserStorageProvid
     }
 
     @Override
+    public void updateLoginTime(RealmModel realm, String userId) {
+        localStorage().updateLoginTime(realm, userId);
+    }
+
+    @Override
     public void setNotBeforeForUser(RealmModel realm, UserModel user, int notBefore) {
         if (StorageId.isLocalStorage(user)) {
             localStorage().setNotBeforeForUser(realm, user, notBefore);
